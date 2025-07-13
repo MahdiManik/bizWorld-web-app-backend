@@ -1,0 +1,8 @@
+[
+  { "week": "Week 1", "Active": 40, "Waiting Approval": 23 },
+  { "week": "Week 2", "Active": 30, "Waiting Approval": 12 },
+  { "week": "Week 4", "Active": 26, "Waiting Approval": 18 },
+  { "week": "Week 5", "Active": 23, "Waiting Approval": 5 },
+  { "week": "Week 6", "Active": 15, "Waiting Approval": 11 },
+  { "week": "Week 3", "Active": 20, "Waiting Approval": 8 }
+]

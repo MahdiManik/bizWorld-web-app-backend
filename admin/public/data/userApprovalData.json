@@ -1,0 +1,4 @@
+[
+  { "name": "Active", "value": 200, "color": "#4F46E5" },
+  { "name": "Waiting Approval", "value": 70, "color": "#60A5FA" }
+]

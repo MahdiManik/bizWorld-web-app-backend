@@ -1,0 +1,7 @@
+- Please read the windsurf/rules files for more details
+- Using bun instead of npm
+- Please read the `project.md` for more details
+- Please read the `todo.md` for more details, after finishing a task, please update the `todo.md`
+- Using Expo React Native and tailwindcss with typescript for app development
+- Using `types` folder for typescript types
+- Using `src` folder for source code

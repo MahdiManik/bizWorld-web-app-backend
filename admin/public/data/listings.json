@@ -1,0 +1,142 @@
+[
+  {
+    "id": "LID-001",
+    "title": "Coffee Shop Franchise",
+    "description": "A coffee shop franchise opportunity with established brand and operations.",
+    "category": "Food & Beverage",
+    "location": "Singapore",
+    "submitter": "Sarah Johnson",
+    "submittedOn": "2025-05-10",
+    "status": "pending"
+  },
+  {
+    "id": "LID-002",
+    "title": "Tech Startup - AI Solutions",
+    "description": "An AI solutions startup focusing on business automation and analytics.",
+    "category": "Technology",
+    "location": "Singapore",
+    "submitter": "John Smith",
+    "submittedOn": "2025-05-09",
+    "status": "approved"
+  },
+  {
+    "id": "LID-003",
+    "title": "Boutique Fashion Store",
+    "description": "A boutique fashion store featuring designer clothing and accessories.",
+    "category": "Retail",
+    "location": "Singapore",
+    "submitter": "Michael Brown",
+    "submittedOn": "2025-05-08",
+    "status": "approved"
+  },
+  {
+    "id": "LID-004",
+    "title": "Food Delivery Service",
+    "description": "A food delivery service connecting local restaurants with customers.",
+    "category": "Food & Beverage",
+    "location": "Toronto, Canada",
+    "submitter": "Michael Brown",
+    "submittedOn": "2025-05-07",
+    "status": "rejected"
+  },
+  {
+    "id": "LID-005",
+    "title": "SaaS Marketing Platform",
+    "description": "A SaaS platform for digital marketing automation and analytics.",
+    "category": "Technology",
+    "location": "San Francisco, USA",
+    "submitter": "Emma Wilson",
+    "submittedOn": "2025-05-06",
+    "status": "rejected"
+  },
+  {
+    "id": "LID-006",
+    "title": "Organic Grocery Chain",
+    "description": "An organic grocery chain focusing on sustainable and local products.",
+    "category": "Retail",
+    "location": "London, UK",
+    "submitter": "David Lee",
+    "submittedOn": "2025-05-05",
+    "status": "pending"
+  },
+  {
+    "id": "LID-007",
+    "title": "Ramen Restaurant",
+    "description": "An authentic Japanese ramen restaurant with traditional recipes.",
+    "category": "Food & Beverage",
+    "location": "Sydney, Australia",
+    "submitter": "Lisa Chen",
+    "submittedOn": "2025-05-04",
+    "status": "approved"
+  },
+  {
+    "id": "LID-008",
+    "title": "Jerome Bell",
+    "description": "A tech consulting firm specializing in digital transformation.",
+    "category": "Technology",
+    "location": "Singapore",
+    "submitter": "Sarah Johnson",
+    "submittedOn": "2025-05-03",
+    "status": "pending"
+  },
+  {
+    "id": "LID-009",
+    "title": "Ralph Edwards",
+    "description": "A luxury retail concept store featuring curated designer products.",
+    "category": "Retail",
+    "location": "Singapore",
+    "submitter": "John Smith",
+    "submittedOn": "2025-05-02",
+    "status": "approved"
+  },
+  {
+    "id": "LID-010",
+    "title": "Brooklyn Simmons",
+    "description": "A specialty coffee roastery and cafe with artisanal offerings.",
+    "category": "Food & Beverage",
+    "location": "Singapore",
+    "submitter": "Michael Brown",
+    "submittedOn": "2025-05-01",
+    "status": "rejected"
+  },
+  {
+    "id": "LID-011",
+    "title": "Kristin Watson",
+    "description": "A tech startup developing innovative IoT solutions.",
+    "category": "Technology",
+    "location": "Singapore",
+    "submitter": "Michael Brown",
+    "submittedOn": "2025-04-30",
+    "status": "approved"
+  },
+  {
+    "id": "LID-012",
+    "title": "Albert Flores",
+    "description": "A retail concept store featuring sustainable fashion brands.",
+    "category": "Retail",
+    "location": "Singapore",
+    "submitter": "Emma Wilson",
+    "submittedOn": "2025-04-29",
+    "status": "pending"
+  },
+  {
+    "id": "LID-013",
+    "title": "Jane Cooper",
+    "description": "A farm-to-table restaurant focusing on local and seasonal ingredients.",
+    "category": "Food & Beverage",
+    "location": "Singapore",
+    "submitter": "David Lee",
+    "submittedOn": "2025-04-28",
+    "status": "rejected"
+  },
+  {
+    "id": "LID-014",
+    "title": "Dianne Russell",
+    "description": "A retail store specializing in handcrafted home decor items.",
+    "category": "Retail",
+    "location": "Singapore",
+    "submitter": "David Lee",
+    "submittedOn": "2025-04-27",
+    "status": "pending"
+  }
+]

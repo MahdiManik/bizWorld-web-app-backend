@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_subscriptions",
+  "info": {
+    "singularName": "user-subscription",
+    "pluralName": "user-subscriptions",
+    "displayName": "UserSubscription"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "userProfile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-profile.user-profile"
+    },
+    "subscription": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subscription.subscription"
+    },
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "paid",
+        "failed"
+      ]
+    }
+  }
+}
