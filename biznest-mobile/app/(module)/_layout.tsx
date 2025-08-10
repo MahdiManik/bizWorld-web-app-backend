@@ -1,12 +1,12 @@
-import { Stack } from "expo-router";
-import { Redirect } from "expo-router";
+import { useIsLoggedIn } from '@/feature/(auth)/hooks/useAuth';
+import { Redirect, Stack } from 'expo-router';
 
 export default function ModuleLayout() {
-  // const isLoggedIn = false;
+  const isLoggedIn = useIsLoggedIn();
 
-  // if (!isLoggedIn) {
-  //   return <Redirect href="/(auth)/login" />;
-  // }
+  if (!isLoggedIn) {
+    return <Redirect href="/(auth)/login" />;
+  }
 
   return (
     <Stack initialRouteName="(tabs)">
@@ -14,12 +14,13 @@ export default function ModuleLayout() {
       <Stack.Screen
         name="more-menu"
         options={{
-          presentation: "transparentModal",
+          presentation: 'transparentModal',
           headerShown: false,
-          animation: "fade",
-          contentStyle: { backgroundColor: "rgba(33, 33, 33, 0.75)" },
+          animation: 'fade',
+          contentStyle: { backgroundColor: 'rgba(33, 33, 33, 0.75)' },
         }}
       />
+      <Stack.Screen name="(a-root)" options={{ headerShown: false }} />
     </Stack>
   );
 }

@@ -1,57 +1,88 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// lib/axios.ts
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+} from 'axios';
+declare module 'axios' {
+  export interface InternalAxiosRequestConfig<D = any> {
+    _retry?: boolean;
+  }
+}
 
-// Create axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL || "http://localhost:1337/api",
-  timeout: 30000,
+  baseURL: process.env.EXPO_PUBLIC_API_URL || 'https://localhost:1337/api',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
-// Request interceptor
+// Add a request interceptor
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    try {
-      // Get token from AsyncStorage
-      const token = await AsyncStorage.getItem("accessToken");
+    // Skip adding token for public endpoints
+    const publicEndpoints = [
+      '/auth/local',
+      '/auth/forgot-password',
+      '/auth/resend-otp',
+      '/auth/complete-registration',
+      '/upload',
+    ];
 
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    const isPublicEndpoint = publicEndpoints.some((endpoint) =>
+      config.url?.includes(endpoint)
+    );
+
+    if (!isPublicEndpoint) {
+      try {
+        const token = await AsyncStorage.getItem('accessToken');
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch (error) {
+        console.error('Error getting auth token:', error);
       }
-
-      return config;
-    } catch (error) {
-      console.error("Request interceptor error:", error);
-      return config;
     }
+
+    // Don't set Content-Type for FormData, let the browser set it with the correct boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
+    return config;
   },
   (error) => {
-    console.error("Request interceptor error:", error);
     return Promise.reject(error);
   }
 );
 
-// Response interceptor
+// Add a response interceptor
 api.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Log response in development
-    if (__DEV__) {
-      console.log("📥 Response:", {
-        status: response.status,
-        url: response.config.url,
-        data: response.data,
-      });
-    }
-
     return response;
   },
   async (error: AxiosError) => {
+    const originalRequest = error.config;
+    if (
+      error.response?.status === 401 &&
+      originalRequest &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+      } catch (refreshError) {
+        // If refresh fails, clear storage and redirect to login
+        await AsyncStorage.multiRemove(['accessToken', 'userData']);
+        // You might want to use a navigation service here instead of window
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login';
+        }
+      }
+    }
+
     return Promise.reject(error);
   }
 );

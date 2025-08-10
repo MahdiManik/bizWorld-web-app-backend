@@ -1,103 +1,61 @@
-import { View } from "react-native";
-import React from "react";
-import { useRouter } from "expo-router";
-import { useForm, Controller } from "react-hook-form";
-import Input from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "@/components/ui/button";
-
-const signupSchema = z.object({
-  fullName: z.string().min(1, "Name is required"),
-  email: z.string().min(1, "Email is required").email("Invalid email format"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must be at least 8 characters"),
-});
-
-type RegisterFormData = z.infer<typeof signupSchema>;
+import { View } from 'react-native';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Button from '@/components/ui/button';
+import FormField from '@/components/form/FormField';
+import { useRegister } from '../../hooks/useAuth';
+import { RegisterFormData, registerSchema } from '../types/register';
 
 const RegisterForm = () => {
-  const router = useRouter();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormData>({
-    resolver: zodResolver(signupSchema),
+  const { mutate: register, isPending } = useRegister();
+
+  const { control, handleSubmit } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
     },
   });
 
   const handleRegister = (data: RegisterFormData) => {
-    console.log(data);
-    router.replace("/register-verify-otp");
+    register({ fullName: data.name, email: data.email, password: data.password });
   };
 
   return (
-    <View className="flex-1">
-      <View className="flex-1">
-        {/* Form Fields */}
-        <View className="space-y-4">
-          <Controller
-            control={control}
-            name="fullName"
-            render={({ field: { onChange, value } }) => (
-              <Input
-                placeholder="Name"
-                value={value}
-                onChangeText={onChange}
-                autoCapitalize="words"
-                error={errors.fullName?.message}
-              />
-            )}
-          />
+    <View>
+      <View className="mb-5 gap-3">
+        <FormField
+          control={control}
+          name="name"
+          placeholder="Full Name"
+        />
 
-          <Controller
-            control={control}
-            name="email"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                placeholder="Email"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                keyboardType="email-address"
-                error={errors.email?.message}
-              />
-            )}
-          />
+        <FormField
+          control={control}
+          name="email"
+          placeholder="Email"
+          keyboardType="email-address"
+        />
 
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                placeholder="Password"
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                secureTextEntry
-                error={errors.password?.message}
-              />
-            )}
-          />
-        </View>
+        <FormField
+          control={control}
+          name="password"
+          placeholder="Password"
+          secureTextEntry
+        />
       </View>
 
-      {/* Bottom Section - Fixed at bottom */}
-      <View className="mt-8 mb-6">
-        {/* Login button */}
+      <View className="mt-20">
         <Button
-          title="Sign up"
+          title="Sign Up"
           onPress={handleSubmit(handleRegister)}
           variant="primary"
           size="large"
           fullWidth
           className="mb-4"
+          disabled={isPending}
         />
       </View>
     </View>

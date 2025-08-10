@@ -1,40 +1,46 @@
-import colors from "@/constants/colors";
-import cn from "@/lib/utils";
-import React, { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import colors from '@/constants/colors';
+import cn from '@/lib/utils';
+import React, { useState } from 'react';
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Platform,
+} from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // Eye Icon Components using Expo Vector Icons
-const EyeIcon = ({ size = 20, color = "#6B7280" }) => (
+const EyeIcon = ({ size = 20, color = '#6B7280' }) => (
   <MaterialIcons name="visibility" size={size} color={color} />
 );
 
-const EyeSlashIcon = ({ size = 20, color = "#6B7280" }) => (
+const EyeSlashIcon = ({ size = 20, color = '#6B7280' }) => (
   <MaterialIcons name="visibility-off" size={size} color={color} />
 );
 
 export interface InputProps {
   placeholder?: string;
+  className?: string;
   value?: string;
   onChangeText?: (text: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;
-  variant?: "default" | "compact" | "password";
-  size?: "small" | "medium" | "large";
+  variant?: 'default' | 'compact' | 'password';
+  size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
   error?: string;
   label?: string;
   required?: boolean;
   secureTextEntry?: boolean;
   keyboardType?:
-    | "default"
-    | "email-address"
-    | "numeric"
-    | "phone-pad"
-    | "number-pad";
-  type?: "text" | "select" | "radio" | "file" | "tag" | "image" | "phone";
-  autoCapitalize?: "none" | "sentences" | "words" | "characters";
-  autoComplete?: "off" | "email" | "password" | "name" | "tel" | "postal-code";
+    | 'default'
+    | 'email-address'
+    | 'numeric'
+    | 'phone-pad'
+    | 'number-pad';
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  autoComplete?: 'off' | 'email' | 'password' | 'name' | 'tel' | 'postal-code';
   maxLength?: number;
   multiline?: boolean;
   numberOfLines?: number;
@@ -46,20 +52,21 @@ export interface InputProps {
 
 const Input: React.FC<InputProps> = ({
   placeholder,
+  className,
   value,
   onChangeText,
   onBlur,
   onFocus,
-  variant = "default",
-  size = "medium",
+  variant = 'default',
+  size = 'medium',
   disabled = false,
   error,
   label,
   required = false,
   secureTextEntry = false,
-  keyboardType = "default",
-  autoCapitalize = "none",
-  autoComplete = "off",
+  keyboardType = 'default',
+  autoCapitalize = 'none',
+  autoComplete = 'off',
   maxLength,
   multiline = false,
   numberOfLines = 1,
@@ -87,45 +94,40 @@ const Input: React.FC<InputProps> = ({
 
   const getContainerClasses = () => {
     return cn(
-      "rounded-lg border-2 flex-row items-center focus:none",
-
-      // Size-based styling
-      {
-        "px-3 py-2": size === "small",
-        "px-4 py-3": size === "medium",
-        "px-4 py-4": size === "large",
-      },
+      'rounded-xl border-2 border-border-10 flex-row items-center ',
+      className,
+      Platform.OS === 'ios' ? 'px-4 py-3' : 'px-3',
 
       // Variant-based styling
       {
-        "w-[148px]": variant === "compact",
-        "w-full": variant === "default" || variant === "password",
+        'w-[148px]': variant === 'compact',
+        'w-full': variant === 'default' || variant === 'password',
       },
 
       // State-based styling
       {
-        "bg-gray-100 opacity-50": disabled,
-        "border-red-500 bg-white": !disabled && error,
-        "border-blue-500 bg-white": !disabled && !error && isFocused,
-        "border-gray-300 bg-white": !disabled && !error && !isFocused,
+        'bg-gray-100 opacity-50': disabled,
+        'border-red': !disabled && error,
+        'border-primary': !disabled && !error && isFocused,
+        'border-gray-300 ': !disabled && !error && !isFocused,
       }
     );
   };
 
   const getTextClasses = () => {
-    return cn("flex-1 text-base", {
-      "text-gray-400": disabled,
-      "text-gray-900": !disabled && error,
-      "text-gray-600": !disabled && !error,
+    return cn('flex-1 text-base', {
+      'text-gray-400': disabled,
+      'text-gray-900': !disabled && error,
+      'text-gray-600': !disabled && !error,
     });
   };
 
   const getPlaceholderTextColor = () => {
-    if (disabled) return colors.gray[400];
-    return colors.gray[500];
+    if (disabled) return colors.placeholder;
+    return colors.placeholder;
   };
 
-  const shouldShowPasswordToggle = variant === "password" || secureTextEntry;
+  const shouldShowPasswordToggle = variant === 'password' || secureTextEntry;
   const isSecureEntry = shouldShowPasswordToggle && !isPasswordVisible;
 
   return (
@@ -133,7 +135,7 @@ const Input: React.FC<InputProps> = ({
       {label && (
         <View className="mb-2 flex-row items-center">
           <Text className="text-sm font-medium text-gray-700">{label}</Text>
-          {required && <Text className="ml-1 text-red-500">*</Text>}
+          {required && <Text className="text-red-500 ml-1">*</Text>}
         </View>
       )}
 
@@ -156,29 +158,19 @@ const Input: React.FC<InputProps> = ({
           multiline={multiline}
           numberOfLines={numberOfLines}
           editable={!disabled}
-          style={[
-            inputStyle,
-            {
-              outlineStyle: "none",
-              outlineWidth: 0,
-              outlineColor: "transparent",
-              outlineOffset: 0,
-              WebkitAppearance: "none",
-              WebkitTapHighlightColor: "transparent",
-            },
-          ]}
+          style={inputStyle}
         />
 
         {shouldShowPasswordToggle && (
           <TouchableOpacity
             onPress={togglePasswordVisibility}
-            className="ml-3 p-1"
+            className="ml-3 px-1"
             disabled={disabled}
           >
             {isPasswordVisible ? (
-              <EyeSlashIcon size={20} color={colors.gray[500]} />
+              <EyeIcon size={20} color={colors.title} />
             ) : (
-              <EyeIcon size={20} color={colors.gray[500]} />
+              <EyeSlashIcon size={20} color={colors.title} />
             )}
           </TouchableOpacity>
         )}
@@ -188,7 +180,7 @@ const Input: React.FC<InputProps> = ({
         )}
       </View>
 
-      {error && <Text className="mt-1 text-sm text-red-500">{error}</Text>}
+      {error && <Text className="mt-1 text-sm text-red">{error}</Text>}
     </View>
   );
 };

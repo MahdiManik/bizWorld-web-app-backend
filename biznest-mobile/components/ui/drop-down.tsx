@@ -1,25 +1,24 @@
-import React, { forwardRef } from "react";
-import { Platform, TextInputProps, TouchableOpacity, View } from "react-native";
-import { Divider, TextInput as PTextInput } from "react-native-paper";
+import React, { forwardRef } from 'react';
+import { TextInputProps, TouchableOpacity, View } from 'react-native';
+import { Divider, TextInput as PTextInput } from 'react-native-paper';
 import {
   DropdownInputProps,
   DropdownItemProps,
   DropdownProps,
   Dropdown as PDropdown,
-} from "react-native-paper-dropdown";
-
-import { Text } from "./text";
-import cn from "@/lib/utils";
-
-import TextInput from "./input";
-import colors from "@/constants/Colors";
+} from 'react-native-paper-dropdown';
+import { Text } from './text';
+import cn from '@/lib/utils';
+import PaperTextInput from './paper-input';
+import colors from '@/constants/colors';
+import { Feather } from '@expo/vector-icons';
 
 export interface IDropdown extends Partial<DropdownProps> {
-  data?: DropdownProps["options"];
-  onChange: DropdownProps["onSelect"];
+  data?: DropdownProps['options'];
+  onChange: DropdownProps['onSelect'];
   helperText?: string;
   asCurrency?: boolean;
-  inputStyle?: TextInputProps["style"];
+  inputStyle?: TextInputProps['style'];
   multiline?: boolean;
 }
 
@@ -51,29 +50,32 @@ const Dropdown: React.ForwardRefRenderFunction<any, IDropdown> = (
       <>
         <TouchableOpacity
           style={{ width }}
-          className={cn("px-4 py-2.5 flex-row gap-3 items-center")}
+          className={cn(
+            'flex-row items-center gap-3 p-3',
+            value === option?.value ? 'bg-[#E6F0F8]' : 'bg-white'
+          )}
           onPress={() => {
-            if (onSelect && option?.value) {
-              onSelect(option.value);
+            if (onSelect) {
+              onSelect(option?.value);
             }
-            if (toggleMenu) {
-              toggleMenu();
-            }
+            toggleMenu();
           }}
         >
+          {value === option?.value ? (
+            <Feather name="check" size={16} color={colors.primary} />
+          ) : (
+            <View className="w-4" />
+          )}
+
           <Text
             className={cn(
-              "text-base",
-              {
-                "text-primary": value === option?.value,
-                "text-subtle": value !== option?.value,
-              }
+              'font-roboto400 text-sm',
+              value === option?.value ? 'text-primary' : 'text-subtle'
             )}
           >
             {option.label}
           </Text>
         </TouchableOpacity>
-        {!isLast && <Divider />}
       </>
     );
   };
@@ -81,28 +83,25 @@ const Dropdown: React.ForwardRefRenderFunction<any, IDropdown> = (
     placeholder,
     selectedLabel,
     rightIcon,
-    error,
-    disabled,
-    label,
   }: DropdownInputProps) => {
     return (
-      <View>
-        {label && (
-          <Text className="text-base font-Urbanist600 text-primary mb-1">
-            {label}
-          </Text>
-        )}
-        <TextInput
-          variant="default"
-          placeholder={placeholder}
-          value={selectedLabel}
-          rightIcon={rightIcon}
-          disabled={disabled}
-          multiline={multiline}
-          inputStyle={[inputStyle, { fontSize: 14, paddingTop: 0, height: 48 }]}
-          error={error ? "Invalid selection" : undefined}
-        />
-      </View>
+      <PaperTextInput
+        mode="outlined"
+        placeholder={placeholder}
+        value={selectedLabel}
+        right={rightIcon}
+        multiline={multiline}
+        style={[
+          inputStyle,
+          {
+            fontSize: 14,
+            paddingTop: 0,
+            backgroundColor: 'white',
+            height: 46,
+          },
+        ]}
+        helperText={helperText}
+      />
     );
   };
 
@@ -112,20 +111,18 @@ const Dropdown: React.ForwardRefRenderFunction<any, IDropdown> = (
       options={data || options || []}
       hideMenuHeader
       menuUpIcon={
-        <PTextInput.Icon size={18} color={colors.gray[500]} icon="chevron-up" />
+        <PTextInput.Icon size={18} color={colors.subtle} icon="chevron-up" />
       }
       menuDownIcon={
-        <PTextInput.Icon
-          size={18}
-          color={colors.gray[500]}
-          icon="chevron-down"
-        />
+        <PTextInput.Icon size={18} color={colors.subtle} icon="chevron-down" />
       }
       onSelect={onChange}
       value={value}
       menuContentStyle={{
-        backgroundColor: "white",
-        marginTop: Platform.OS === "ios" ? 68 : 45,
+        backgroundColor: 'white',
+        paddingVertical: 8,
+        maxHeight: 200,
+        marginTop: 44,
         ...menuContentStyle,
       }}
       CustomDropdownItem={CustomDropdownItem}

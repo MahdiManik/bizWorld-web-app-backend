@@ -1,24 +1,28 @@
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { Tabs, router } from "expo-router";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import BurgerIcon from '@/assets/svgs/tabs/BurgerIcon';
+import ChatIcon from '@/assets/svgs/tabs/ChatIcon';
+import DocumentIcon from '@/assets/svgs/tabs/DocumentIcon';
+import HomeIcon from '@/assets/svgs/tabs/HomeIcon';
+import UserIcon from '@/assets/svgs/tabs/UserIcon';
+import colors from '@/constants/colors';
+import { Tabs, router } from 'expo-router';
+import { Platform, TouchableOpacity, View } from 'react-native';
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#007AFF",
-        tabBarInactiveTintColor: "#8E8E93",
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.placeholder,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
+            position: 'absolute',
           },
           default: {},
         }),
 
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: "500",
+          fontWeight: '500',
         },
         headerShown: false,
       }}
@@ -26,67 +30,42 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "home" : "home-outline"}
-              size={24}
-              color={color}
-            />
-          ),
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <HomeIcon isActive={focused} />,
         }}
       />
 
       <Tabs.Screen
         name="listings"
         options={{
-          title: "Listings",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "list" : "list-outline"}
-              size={24}
-              color={color}
-            />
-          ),
+          title: 'Listings',
+          tabBarIcon: ({ focused }) => <DocumentIcon isActive={focused} />,
         }}
       />
 
       <Tabs.Screen
         name="chat"
         options={{
-          title: "Chat",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "chatbubble" : "chatbubble-outline"}
-              size={24}
-              color={color}
-            />
-          ),
+          title: 'Chat',
+          tabBarIcon: ({ focused }) => <ChatIcon isActive={focused} />,
         }}
       />
 
       <Tabs.Screen
         name="investors"
         options={{
-          title: "Investors",
-          tabBarIcon: ({ color, focused }) => (
-            <FontAwesome5
-              name="users"
-              size={20}
-              color={color}
-              solid={focused}
-            />
-          ),
+          title: 'Investors',
+          tabBarIcon: ({ focused }) => <UserIcon isActive={focused} />,
         }}
       />
 
       <Tabs.Screen
         name="more"
         options={{
-          title: "More",
-          tabBarIcon: ({ color, focused }) => (
-            <View style={styles.moreIconContainer}>
-              <Ionicons name="ellipsis-horizontal" size={24} color={color} />
+          title: 'More',
+          tabBarIcon: () => (
+            <View>
+              <BurgerIcon />
             </View>
           ),
           tabBarButton: (props) => (
@@ -98,7 +77,7 @@ export default function TabLayout() {
               style={props.style}
               onPress={() => {
                 // Open modal instead of navigating to more screen
-                router.push("/more-menu");
+                router.push('/more-menu');
               }}
             >
               {props.children}
@@ -109,9 +88,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  moreIconContainer: {
-    position: "relative",
-  },
-});

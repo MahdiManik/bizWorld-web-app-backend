@@ -1,109 +1,119 @@
-import React from "react";
-import { TouchableOpacity, Text, View } from "react-native";
+import cn from '@/lib/utils';
+import React from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
 
 export interface ButtonProps {
   title: string;
   onPress: () => void;
   variant?:
-    | "primary"
-    | "secondary"
-    | "outline"
-    | "ghost"
-    | "danger"
-    | "success"
-    | "text";
-  size?: "small" | "medium" | "large";
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'ghost'
+  | 'danger'
+  | 'success'
+  | 'text'
+  | 'lock';
+  size?: 'small' | 'medium' | 'large' | 'none';
   disabled?: boolean;
   icon?: React.ReactNode;
-  iconPosition?: "left" | "right";
+  iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
   className?: string;
+  titleClassName?: string;
   textClassName?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   title,
   onPress,
-  variant = "primary",
-  size = "medium",
+  variant = 'primary',
+  size = 'medium',
   disabled = false,
   icon,
-  iconPosition = "left",
+  iconPosition = 'left',
   fullWidth = false,
-  className = "",
-  textClassName = "",
+  className = '',
+  textClassName = '',
+  titleClassName = '',
 }) => {
   const getButtonClasses = () => {
-    let classes = "rounded-lg items-center";
+    let classes = 'rounded-lg items-center';
 
     // Full width handling - if fullWidth, we want justify-center, otherwise we want natural sizing
     if (fullWidth) {
-      classes += " w-full justify-center";
+      classes += ' w-full justify-center';
     } else {
-      classes += " self-start";
+      classes += ' self-start';
     }
 
     // Direction based on icon position
-    if (iconPosition === "right") {
-      classes += " flex-row-reverse";
+    if (iconPosition === 'right') {
+      classes += ' flex-row-reverse';
     } else {
-      classes += " flex-row";
+      classes += ' flex-row';
     }
 
     // Size classes - text variant has minimal padding
-    if (variant === "text") {
+    if (variant === 'text') {
       switch (size) {
-        case "small":
-          classes += " px-0 py-0";
+        case 'small':
+          classes += ' px-0 py-0';
           break;
-        case "medium":
-          classes += " px-0 py-1";
+        case 'medium':
+          classes += ' px-0 py-1';
           break;
-        case "large":
-          classes += " px-0 py-1";
+        case 'large':
+          classes += ' px-0 py-1';
           break;
       }
     } else {
       switch (size) {
-        case "small":
-          classes += " px-3 py-1.5";
+        case 'small':
+          classes += ' px-3 py-1.5';
           break;
-        case "medium":
-          classes += " px-4 py-2";
+        case 'medium':
+          classes += ' px-4 py-2';
           break;
-        case "large":
-          classes += " px-6 py-3";
+        case 'large':
+          classes += ' px-6 py-3';
+          break;
+        case 'none':
+          classes += ' px-0 py-0';
           break;
       }
     }
 
     // Disabled state
     if (disabled) {
-      classes += " opacity-30";
+      classes += ' opacity-30';
     }
 
     // Variant classes
     switch (variant) {
-      case "primary":
-        classes += " bg-primary";
+      case 'primary':
+        classes += ' bg-primary';
         break;
-      case "secondary":
-        classes += " bg-secondary";
+      case 'secondary':
+        classes += ' bg-secondary';
         break;
-      case "outline":
-        classes += " bg-transparent border border-primary";
+      case 'outline':
+        classes += ' bg-transparent border border-primary';
         break;
-      case "ghost":
-        classes += " bg-transparent";
+      case 'ghost':
+        classes += ' bg-transparent';
         break;
-      case "danger":
-        classes += " bg-transparent border border-red-600";
+      case 'danger':
+        classes += ' bg-transparent border border-red-600';
         break;
-      case "success":
-        classes += " bg-green-500";
+      case 'success':
+        classes += ' bg-green-500';
         break;
-      case "text":
-        classes += " bg-transparent";
+      case 'text':
+        classes += ' bg-transparent';
+        break;
+      case 'lock':
+        classes += ' bg-strok-border';
         break;
     }
 
@@ -111,43 +121,46 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const getTextClasses = () => {
-    let classes = "font-medium";
+    let classes = cn('font-medium', titleClassName);
 
     // Size classes
     switch (size) {
-      case "small":
-        classes += " text-sm";
+      case 'small':
+        classes += ' text-sm';
         break;
-      case "medium":
-        classes += " text-base";
+      case 'medium':
+        classes += ' text-base';
         break;
-      case "large":
-        classes += " text-lg";
+      case 'large':
+        classes += ' text-lg';
         break;
     }
 
     // Variant text colors
     switch (variant) {
-      case "primary":
-        classes += " text-white";
+      case 'primary':
+        classes += ' text-white';
         break;
-      case "secondary":
-        classes += " text-white";
+      case 'secondary':
+        classes += ' text-white';
         break;
-      case "outline":
-        classes += " text-primary";
+      case 'outline':
+        classes += ' text-primary';
         break;
-      case "ghost":
-        classes += " text-link";
+      case 'ghost':
+        classes += ' text-primary';
         break;
-      case "danger":
-        classes += " text-red-600";
+      case 'danger':
+        classes += ' text-red-600';
         break;
-      case "success":
-        classes += " text-white";
+      case 'success':
+        classes += ' text-white';
         break;
-      case "text":
-        classes += " text-gray-700";
+      case 'text':
+        classes += ' text-gray-700';
+        break;
+      case 'lock':
+        classes += ' text-title';
         break;
     }
 
@@ -155,17 +168,17 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const getIconSpacing = () => {
-    if (!title) return "";
+    if (!title) return '';
 
     switch (size) {
-      case "small":
-        return iconPosition === "right" ? "ml-1" : "mr-1";
-      case "medium":
-        return iconPosition === "right" ? "ml-2" : "mr-2";
-      case "large":
-        return iconPosition === "right" ? "ml-2" : "mr-2";
+      case 'small':
+        return iconPosition === 'right' ? 'ml-1' : 'mr-1';
+      case 'medium':
+        return iconPosition === 'right' ? 'ml-2' : 'mr-2';
+      case 'large':
+        return iconPosition === 'right' ? 'ml-2' : 'mr-2';
       default:
-        return iconPosition === "right" ? "ml-2" : "mr-2";
+        return iconPosition === 'right' ? 'ml-2' : 'mr-2';
     }
   };
 
@@ -176,7 +189,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       activeOpacity={0.7}
     >
-      {icon && iconPosition === "left" && (
+      {icon && iconPosition === 'left' && (
         <View className={getIconSpacing()}>{icon}</View>
       )}
 
@@ -184,7 +197,7 @@ const Button: React.FC<ButtonProps> = ({
         <Text className={`${getTextClasses()} ${textClassName}`}>{title}</Text>
       )}
 
-      {icon && iconPosition === "right" && (
+      {icon && iconPosition === 'right' && (
         <View className={getIconSpacing()}>{icon}</View>
       )}
     </TouchableOpacity>

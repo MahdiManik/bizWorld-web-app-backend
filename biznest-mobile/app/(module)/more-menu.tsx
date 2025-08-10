@@ -1,13 +1,16 @@
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useEffect, useRef } from "react";
+import ConsultantsIcon from '@/assets/svgs/tabs/ConsultantsIcon';
+import FavouriteIcon from '@/assets/svgs/tabs/FavouriteIcon';
+import ProfileIcon from '@/assets/svgs/tabs/ProfileIcon';
+
+import { router } from 'expo-router';
+import { useEffect, useRef } from 'react';
 import {
   Animated,
   Pressable,
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 
 export default function MoreMenuModal() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -27,7 +30,7 @@ export default function MoreMenuModal() {
         useNativeDriver: true,
       }),
     ]).start();
-  }, []);
+  }, [fadeAnim, scaleAnim]);
 
   const closeModal = () => {
     Animated.parallel([
@@ -48,30 +51,24 @@ export default function MoreMenuModal() {
 
   const menuItems = [
     {
-      title: "Consultants",
-      icon: <Ionicons name="headset" size={24} color="#007AFF" />,
+      title: 'Consultants',
+      icon: <ConsultantsIcon />,
       onPress: () => {
-        closeModal();
-        // Navigate to consultants
-        console.log("Navigate to Consultants");
+        router.replace('/(module)/(a-root)/consultants');
       },
     },
     {
-      title: "My Favorites",
-      icon: <Ionicons name="heart" size={24} color="#007AFF" />,
+      title: 'My Favorites',
+      icon: <FavouriteIcon />,
       onPress: () => {
-        closeModal();
-        // Navigate to favorites
-        console.log("Navigate to Favorites");
+        router.replace('/(module)/(a-root)/favourites');
       },
     },
     {
-      title: "Account Settings",
-      icon: <FontAwesome name="user-circle-o" size={24} color="#007AFF" />,
+      title: 'Account Settings',
+      icon: <ProfileIcon />,
       onPress: () => {
-        closeModal();
-        // Navigate to settings
-        console.log("Navigate to Settings");
+        router.replace('/(module)/(a-root)/account-settings');
       },
     },
   ];
@@ -92,14 +89,14 @@ export default function MoreMenuModal() {
         {menuItems.map((item, index) => (
           <TouchableOpacity
             key={index}
-            className="flex-row items-center justify-end py-3 px-5 shadow-lg my-2 gap-2"
+            className="my-2 flex-row items-center justify-end gap-2 px-5 py-3 shadow-lg"
             onPress={item.onPress}
             activeOpacity={0.8}
           >
             <Text className="text-base font-medium text-white">
               {item.title}
             </Text>
-            <View className="w-10 h-10 bg-[#F2F2F7] rounded-full justify-center items-center mr-3">
+            <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-[#F2F2F7]">
               {item.icon}
             </View>
           </TouchableOpacity>

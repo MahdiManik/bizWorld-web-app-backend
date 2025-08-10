@@ -1,5 +1,5 @@
-import { View } from "react-native";
+import Listing from '@/feature/(modules)/listing/components/Listing';
 
 export default function ListingsScreen() {
-  return <View style={{ flex: 1 }}></View>;
+  return <Listing />;
 }

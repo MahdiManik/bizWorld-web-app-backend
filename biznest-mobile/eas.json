@@ -11,6 +11,10 @@
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://biz-nest-office.singaporetestlab.com/api",
+        "EXPO_PUBLIC_URL": "http://localhost:8081"
       }
     },
     "preview2": {

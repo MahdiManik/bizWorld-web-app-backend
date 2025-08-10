@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import Chat from '@/feature/(modules)/chat/Chat';
 
 export default function ChatScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Chat Screen</Text>
-    </View>
-  );
+  return <Chat />;
 }
